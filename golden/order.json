@@ -1,0 +1,30 @@
+{
+  "name": "order: engine accepted and counted",
+  "operation": "order",
+  "input": {
+    "event_id": "order:order-1",
+    "occurred_at": "2026-11-01T10:05:00Z",
+    "order_id": "order-1",
+    "member_id": "user-42",
+    "amount": 500000,
+    "currency": "RUB",
+    "personal_volume": "5000"
+  },
+  "server": {
+    "status": 200,
+    "body": {
+      "queued": false,
+      "eventId": "order:order-1",
+      "engine": {
+        "eventId": "order:order-1",
+        "status": "accepted",
+        "duplicate": false
+      }
+    }
+  },
+  "expected": {
+    "eventId": "order:order-1",
+    "queued": false,
+    "status": "accepted"
+  }
+}

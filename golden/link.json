@@ -1,0 +1,18 @@
+{
+  "name": "partner link for the clients",
+  "operation": "partner_link",
+  "input": { "external_account_id": "user-42", "destination_url": null },
+  "server": {
+    "status": 200,
+    "body": {
+      "code": "IRON",
+      "url": "https://shop.example/r/IRON",
+      "expiresAt": "2026-12-01T10:00:00Z"
+    }
+  },
+  "expected": {
+    "code": "IRON",
+    "url": "https://shop.example/r/IRON",
+    "expiresAt": "2026-12-01T10:00:00Z"
+  }
+}

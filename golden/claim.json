@@ -1,0 +1,22 @@
+{
+  "name": "claim: client is bound right away",
+  "operation": "claim",
+  "input": { "code": "IRON", "external_account_id": "user-42" },
+  "server": {
+    "status": 200,
+    "body": {
+      "status": "claimed",
+      "code": "IRON",
+      "sponsorId": "user-7",
+      "memberId": "user-42",
+      "claimedAt": "2026-11-01T10:00:00Z"
+    }
+  },
+  "expected": {
+    "status": "claimed",
+    "code": "IRON",
+    "memberId": "user-42",
+    "sponsorId": "user-7",
+    "claimedAt": "2026-11-01T10:00:00Z"
+  }
+}

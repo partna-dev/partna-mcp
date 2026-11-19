@@ -1,0 +1,10 @@
+{
+  "name": "claim: engine is down, the fact waits in the queue",
+  "operation": "claim",
+  "input": { "code": "IRON", "external_account_id": "user-42" },
+  "server": {
+    "status": 202,
+    "body": { "status": "pending", "eventId": "claim:IRON:user-42" }
+  },
+  "expected": { "status": "pending", "eventId": "claim:IRON:user-42" }
+}
