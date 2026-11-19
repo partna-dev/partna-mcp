@@ -1,56 +1,55 @@
 # partna-mcp
 
-MCP-сервер партнёрской программы Partna: агент заводит участников, сообщает об
-оплатах и возвратах, выдаёт ссылки партнёрам и читает сводку. Деньги через сервер
-не проходят: он только передаёт факты и читает цифры.
+MCP server for the Partna partner programme: an agent registers members, reports
+payments and refunds, issues partner links and reads the numbers. Money does not
+pass through the server — it only moves facts and reads figures.
 
-Обзор, установка и глоссарий — в документации: https://partna.dev/docs/
+English · [Русский](README.ru.md)
 
-## Что внутри
+## What is inside
 
-Пакет с портом и адаптерами:
+A package with a port and adapters:
 
 ```
-MCP-инструменты
+MCP tools
       │
       ▼
- порт PartnerApi  — операции повторяют сервисные функции ядра
-      ├── HttpBackend  — по публичному контракту фактов (этот пакет)
-      └── LocalBackend — в закрытом репозитории ядра, вызывает use cases
+ port PartnerApi  — operations mirror the core's use cases
+      ├── HttpBackend  — over the public facts contract (this package)
+      └── LocalBackend — in the closed core repository, calls use cases
 ```
 
-Инструменты не знают, куда именно они ходят: `PARTNA_BACKEND=http` говорит с
-мостом или ядром по HTTP. Локальный адаптер ставится отдельно и доступен только
-там, где есть доступ к базе.
+Tools do not know where they travel: `PARTNA_BACKEND=http` talks to a bridge or
+to the core over HTTP. The local adapter is installed separately and exists only
+where the database is reachable.
 
-## Инструменты
+## Tools
 
-| Инструмент | Что делает |
+| Tool | What it does |
 |---|---|
-| `status` | доступность сервиса, режим, задан ли ключ |
-| `partner_link` | ссылка партнёра для его клиентов |
-| `claim` | привязать клиента к коду партнёра |
-| `member` | участник программы и от кого пришёл |
-| `order` | клиент оплатил |
-| `refund` | клиенту вернули деньги |
-| `referral_status` | привязан ли клиент и к какому коду |
-| `dashboard` | сводка партнёра |
-| `payouts` | история выплат |
+| `status` | service reachability, mode, whether a key is set |
+| `partner_link` | a partner's link for their clients |
+| `claim` | bind a client to a partner code |
+| `member` | a programme member and who invited them |
+| `order` | a client paid |
+| `refund` | a client was refunded |
+| `referral_status` | whether a client is bound, and to which code |
+| `dashboard` | partner summary |
+| `payouts` | payout history |
 
-Пишущие инструменты принимают `dry_run`: он показывает тело запроса и ничего не
-отправляет.
+Write tools accept `dry_run`: it shows the request body and sends nothing.
 
-## Запуск
+## Running
 
 ```bash
 export PARTNA_BRIDGE_URL=https://partna.client.com
-export PARTNA_BRIDGE_TOKEN=...        # токен моста, если он задан
+export PARTNA_BRIDGE_TOKEN=...        # bridge token, if it is set
 export PARTNA_ENGINE_URL=https://networks.partna.dev
-export PARTNA_API_KEY=...             # ключ тенанта для чтения
+export PARTNA_API_KEY=...             # tenant key for reads
 uvx partna-mcp
 ```
 
-Транспорт — stdio. Подключение в клиенте:
+Transport is stdio. Wiring it into a client:
 
 ```json
 {
@@ -68,25 +67,25 @@ uvx partna-mcp
 }
 ```
 
-Если моста нет, задайте только `PARTNA_ENGINE_URL` и `PARTNA_API_KEY`: факты
-пойдут прямо в ядро его путями.
+Without a bridge, set only `PARTNA_ENGINE_URL` and `PARTNA_API_KEY`: facts go
+straight to the core using its paths.
 
-## Правила
+## Rules
 
-- `eventId` уникален навсегда: один факт — один идентификатор, повтор не должен
-  давать второе начисление.
-- Ключи берутся только из окружения; инструменты не принимают их аргументами и
-  не печатают в ответах.
-- Ошибки возвращаются текстом сервиса без стеков и без секретов.
+- `eventId` is unique forever: one fact — one identifier, a retry must not create
+  a second accrual.
+- Keys come from the environment only; tools never accept them as arguments and
+  never print them in responses.
+- Errors come back as the service text, without stacks and without secrets.
 
-## Контракт
+## Contract
 
-Пять операций описаны в
+The five operations are described in
 [partna-bridge/spec](https://github.com/partna-dev/partna-bridge/blob/main/spec/README.md).
-Golden-кейсы лежат в пакете (`src/partna_mcp/golden/`) и доступны через
-`partna_mcp.golden.load_cases()` — общий эталон для HTTP- и локального адаптера:
-одинаковый вход должен давать одинаковый ответ.
+Golden cases live inside the package (`src/partna_mcp/golden/`) and are readable
+through `partna_mcp.golden.load_cases()`: the shared reference for the HTTP and
+the local adapter — the same input must give the same answer.
 
-## Лицензия
+## License
 
-MIT — см. [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).

@@ -14,3 +14,11 @@ jobs:
       - run: uv sync --group dev
       - run: uv run ruff check src tests
       - run: uv run pytest -q
+      - name: readmes stay in sync
+        run: |
+          ru=$(grep -c '^#' README.ru.md)
+          en=$(grep -c '^#' README.md)
+          if [ "$ru" -ne "$en" ]; then
+            echo "README.md and README.ru.md have different section counts: $en vs $ru"
+            exit 1
+          fi
