@@ -81,8 +81,9 @@ uvx partna-mcp
 
 Пять операций описаны в
 [partna-bridge/spec](https://github.com/partna-dev/partna-bridge/blob/main/spec/README.md).
-Golden-кейсы в [`golden/`](golden) — общий эталон для HTTP- и локального
-адаптера: одинаковый вход должен давать одинаковый ответ.
+Golden-кейсы лежат в пакете (`src/partna_mcp/golden/`) и доступны через
+`partna_mcp.golden.load_cases()` — общий эталон для HTTP- и локального адаптера:
+одинаковый вход должен давать одинаковый ответ.
 
 ## Лицензия
 

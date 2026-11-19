@@ -17,7 +17,7 @@
       "eventId": "order:order-1",
       "engine": {
         "eventId": "order:order-1",
-        "status": "accepted",
+        "status": "processed",
         "duplicate": false
       }
     }
@@ -25,6 +25,6 @@
   "expected": {
     "eventId": "order:order-1",
     "queued": false,
-    "status": "accepted"
+    "status": "processed"
   }
 }
